@@ -2,11 +2,11 @@
 
 A bare-metal C++ closed-loop motor controller built on an STM32 Nucleo-F446RE (Cortex-M4), driving a brushless motor via ESC/PWM to stabilize a single-axis balancing arm using real-time potentiometer feedback.
 
-🎥 **Demo video:** [link here]
+🎥 **Demo video:** 
 
 ## Overview
 
-This project was built to develop genuine embedded C++ fluency — deliberately implemented at the register level (direct CMSIS access, no HAL/CubeMX) rather than relying on generated peripheral drivers. It covers the full stack from bare-metal peripheral bring-up through a tuned PID control loop running on real hardware.
+This project was built to develop genuine embedded C++ fluency deliberately implemented at the register level (direct CMSIS access, no HAL/CubeMX) rather than relying on generated peripheral drivers. It covers the full stack from bare-metal peripheral bring-up through a tuned PID control loop running on real hardware.
 
 **Hardware:**
 - STM32 Nucleo-F446RE (Cortex-M4)
