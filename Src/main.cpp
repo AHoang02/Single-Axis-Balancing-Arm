@@ -155,7 +155,7 @@ int main(void)
 	initSysTick();
 	adc potadc(ADC1);
 	esc motoresc(TIM3);
-	PID pid(0.02,0.0003,0.008);
+	PID pid(0.02,0.0003,0.01);
 	volatile uint32_t i;
 	uint32_t measure;
 	float PIDout;
@@ -173,9 +173,9 @@ int main(void)
 	        if (measure > 4000) { measure = 4000; }
 	        if (dt > 0.0001f) {
 	        	PIDout = pid.compute(2708, measure, dt);
-	        	if (PIDout > 8.0f) { PIDout = 8.0f; }
-	        	if (PIDout < -8.0f) { PIDout = -8.0f; }
-	        	float commandedThrottle = 87.0f + PIDout;
+	        	if (PIDout > 3.0f) { PIDout = 3.0f; }    // tighter cap going up
+	        	if (PIDout < -5.0f) { PIDout = -5.0f; }  // looser cap going down
+	        	float commandedThrottle = 82.0f + PIDout;
 	        	motoresc.setThrottle(commandedThrottle);
 	        }   // setThrottle's own clamp handles out-of-range safely
 	        for (i = 0; i < 20000; i++) { }  // rough delay, tune the number by trial
