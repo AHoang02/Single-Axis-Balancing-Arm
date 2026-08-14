@@ -26,7 +26,6 @@ A `main()` superloop ties them together: read ADC → compute PID correction →
 
 ## Notable engineering / debugging work
 
-- **HardFault root-caused via register-level fault decoding**, not trial and error: traced a Cortex-M4 HardFault to an unenabled FPU coprocessor by reading and manually decoding the Cortex-M4 Configurable Fault Status Register (CFSR) bit-by-bit against the ARM architecture reference, isolating the exact fault type (`NOCP` — no coprocessor access) before applying the fix (`SCB->CPACR` + barrier instructions).
 - **Anti-windup and output-bounding on the PID controller**: the integral term is clamped to prevent windup, and total controller output is bounded relative to a baseline throttle so no combination of sensor noise or transient error can drive the actuator to full authority.
 - **A safety-clamp interaction bug**: an ADC input-range clamp — intended only to guard against sensor glitches — was initially set too narrow, silently capping the controller's view of real position error during a large excursion and preventing an adequate corrective response. Widening the sensor clamp to a true safety-only bound (while keeping a separate, tighter clamp on controller *output*) resolved it — a concrete lesson in why sensor-input clamps and actuator-output clamps serve different purposes and need independently-chosen bounds.
 
